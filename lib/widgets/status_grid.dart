@@ -112,15 +112,23 @@ class StatusTile extends StatelessWidget {
                 ),
               ),
               if (item.isVideo)
-                Center(
+                Positioned(
+                  top: 8,
+                  left: 8,
                   child: Container(
-                    padding: const EdgeInsets.all(6),
+                    padding: const EdgeInsets.fromLTRB(4, 3, 8, 3),
                     decoration: BoxDecoration(
                       color: Colors.black.withValues(alpha: 0.45),
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white70, width: 1.5),
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                    child: const Icon(Icons.play_arrow_rounded, color: Colors.white, size: 26),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(Icons.play_arrow_rounded, color: Colors.white, size: 16),
+                        SizedBox(width: 2),
+                        Text('Video', style: TextStyle(color: Colors.white, fontSize: 10.5, fontWeight: FontWeight.w600)),
+                      ],
+                    ),
                   ),
                 ),
               Positioned(

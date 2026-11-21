@@ -368,7 +368,12 @@ class _VideoPageState extends State<_VideoPage> {
   Future<void> _load() async {
     try {
       final path = await widget.service.localPath(widget.item);
-      final c = VideoPlayerController.file(File(path));
+      // Platform view renders into a native SurfaceView. The default texture
+      // mode fails to start the hardware decoder on some MediaTek devices.
+      final c = VideoPlayerController.file(
+        File(path),
+        viewType: Platform.isAndroid ? VideoViewType.platformView : VideoViewType.textureView,
+      );
       await c.initialize();
       await c.setLooping(true);
       if (!mounted) {
@@ -421,10 +426,7 @@ class _VideoPageState extends State<_VideoPage> {
     final c = _controller;
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () {
-        _togglePlay();
-        widget.onTap();
-      },
+      onTap: _togglePlay,
       child: Stack(
         alignment: Alignment.center,
         children: [
